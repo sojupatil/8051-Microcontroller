@@ -150,3 +150,63 @@ for(j=0;j<1000;j++);
 ```
 
 # Practical NO 8.  
+
+
+## LCD 
+```c
+ #include<reg51.h>
+sbit rs=P1^0;
+sbit rw=P1^1;
+sbit en=P1^2;
+void lcd_cmd(char c);
+void lcd_data(char d);
+void lcd_string(char*s);
+void delay(void);
+void main(void)
+{
+P2=0x00;
+while(1)
+{
+lcd_cmd(0x38);
+lcd_cmd(0x0c);
+lcd_cmd(0x01);
+lcd_cmd(0x80);
+lcd_string("Hello Students!");
+lcd_cmd(0xc0);
+lcd_string("!!welcome");
+}
+}
+void lcd_cmd(char c)
+{
+rw=0;
+P2=c;
+delay();
+rs=0;
+en=1;
+en=0;
+}
+void lcd_data(char d)
+{
+rw=0;
+P2=d;
+delay();
+rs=1;
+en=1;
+en=0;
+}
+void lcd_string(char*s)
+{
+while(*s)
+{
+lcd_data(*s++);
+}
+}
+void delay(void)
+{
+int i,j;
+for(i=0;i<100;i++)
+{
+for(j=0;j<1000;j++);
+}
+}
+```
