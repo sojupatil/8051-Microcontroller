@@ -379,35 +379,33 @@ for(j=0;j<1000;j++);
 ```C
   #include <reg51.h>
 
-sbit LED = P2^0;       // LED connected to pin P2.0
-sbit switch_pin = P0^1; // Switch connected to pin P0.1
+sbit LED = P2^0;      
+sbit switch_pin = P0^1; 
 
 void delay(void) 
 {
     unsigned int i, j;
     for(i = 0; i <100; i++)
-        for(j = 0; j < 1275; j++);  // Roughly 1 ms delay at 12MHz
+        for(j = 0; j < 1275; j++);  
 }
 
 void main(void)
  {
-    switch_pin = 0;  // Configure as input (quasi-bidirectional)
-    LED = 0;         // Turn OFF LED initially (assuming active low)
-
+    switch_pin = 0;  
+    LED = 0;        
     while(1) 
     {
         if (switch_pin == 0) 
         { 
-         // If switch is pressed (active low)
-            delay();       // Debounce delay
+            delay();       
           
                // Confirm press
-                LED = 0;        // Turn ON LED
+                LED = 0;        
             
         }
          else 
         {
-            LED = 1;            // Turn OFF LED
+            LED = 1;            
         }
     }
 }
@@ -416,18 +414,51 @@ void main(void)
 ## STEPPER MOTOR 
 ```c
 #include<reg51.h>
-void ms_delay(unsigned int t) //To create a delay of 200 ms = 200 x 1ms
+void ms_delay(unsigned int t) 
 {
 unsigned i,j ;
-for(i=0;i<t;i++)	//200 times 1 ms delay for(j=0;j<1275;j++); //1ms delay
+for(i=0;i<t;i++)	
 }
 void main()
 {
-while(1) // To repeat infinitely
+while(1) 
 {
-P2=0x0C;	//P2 = 0000 1100 First Step ms_delay(200);
-P2=0x06;	//P2 = 0000 0110 Second Step ms_delay(200);
-P2=0x03;	//P2 = 0000 0011 Third Step ms_delay(200);
-P2=0x09;	//P2 = 0000 1001 Fourth Step ms_delay(200);
+P2=0x0C;	
+P2=0x06;	
+P2=0x03;	
+P2=0x09;	
+}
+```
+
+# Practical NO 12.
+## Interfacing of Dc motor 
+
+```c
+#include <reg51.h>
+
+// Define motor control pins
+sbit EN1 = P0^0;   
+sbit IN1 = P0^1;  
+sbit IN2 = P0^2;  
+
+// Delay function
+void delay() {
+    int i, j;
+    for(i = 0; i < 100; i++) {
+        for(j = 0; j < 1000; j++);
+    }
+}
+
+void main() {
+    EN1 = 1;  
+    while(1) {
+        IN1 = 1;
+        IN2 = 0;
+        delay();
+
+        IN1 = 0;
+        IN2 = 1;
+        delay();
+    }
 }
 ```
