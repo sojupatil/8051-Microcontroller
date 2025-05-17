@@ -150,8 +150,171 @@ for(j=0;j<1000;j++);
 ```
 
 # Practical NO 8.  
+## TRAFFFIC LIGHT
+ ```c
+#include<reg51.h>
+sbit NR = P2^0;
+sbit NY = P2^1;
+sbit NG	= P2^2;
 
+sbit ER = P2^3;
+sbit EY = P2^4;
+sbit EG = P2^5;
 
+sbit WR1 = P3^0;
+sbit WY = P3^1;
+sbit WG = P3^2;
+
+sbit SR = P3^3;
+sbit SY = P3^4;
+sbit SG = P3^5;
+
+void ydelay(void);
+void gdelay(void);
+void main(void)
+{
+P0 = 0x00;
+P2 = 0x00;
+//north green//
+NG = 1;
+ER = 1;
+SR = 1;
+WR1 = 1;
+NY = 0;
+NR = 0;
+EG = 0;
+EY = 0;
+SG = 0;
+SY = 0;
+WG = 0;
+WY = 0;
+gdelay();
+//north yellow//
+NY = 1;
+ER = 1;
+SR = 1;
+WR1 = 1;
+NG = 0;	 
+NR = 0;	
+EG = 0;	   
+EY = 0;
+SG = 0;	  	
+SY = 0;		
+WG = 0;		 
+WY = 0;			
+
+ydelay();
+
+//EAST GREEN//
+EG = 1;
+NR = 1;
+SR = 1;
+WR1 = 1;
+NY = 0;
+NG = 0;
+ER = 0;
+EY = 0;
+SG = 0;
+SY = 0;
+WG = 0;
+WY = 0;
+gdelay();
+
+//east yellow//
+
+EY = 1;
+NR = 1;
+SR = 1;
+WR1 = 1;
+NY = 0;
+NG = 0;
+ER = 0;
+EG = 0;
+SG = 0;
+SY = 0;
+WG = 0;
+WY = 0;
+ydelay();
+
+//south green//
+SG = 1;
+ER = 1;
+NR = 1;
+WR1 = 1;
+NY = 0;
+NG = 0;
+EG = 0;
+EY = 0;
+SR = 0;
+SY = 0;
+WG = 0;
+WY = 0;
+gdelay();
+
+//south yellow//
+SY = 1;
+ER = 1;
+NR = 1;
+WR1 = 1;
+NY = 0;
+NG = 0;
+EG = 0;
+EY = 0;
+SG = 0;
+SR = 0;
+WG = 0;
+WY = 0;
+ydelay();
+
+//west green//
+WG = 1;
+ER = 1;
+SR = 1;
+NR = 1;
+NY = 0;
+NG = 0;
+EG = 0;
+EY = 0;
+SG = 0;
+SY = 0;
+WY = 0;
+WR1 = 0;
+gdelay();
+
+//west yellow//
+WY = 1;
+ER = 1;
+SR = 1;
+NR = 1;
+NY = 0;
+NG = 0;
+EG = 0;
+EY = 0;
+SG = 0;
+SY = 0;
+WG = 0;
+WR1 = 0;
+ydelay();
+}
+void ydelay(void)
+{
+int i,j;
+for(i=0;i<400;i++)
+{
+for(j=0;j<1000;j++);
+}
+}
+void gdelay(void)
+{
+int i,j;
+for(i=0;i<600;i++)
+{
+for(j=0;j<1000;j++);
+}
+}
+```
+
+# Practical NO 9.
 ## LCD 
 ```c
  #include<reg51.h>
@@ -208,5 +371,63 @@ for(i=0;i<100;i++)
 {
 for(j=0;j<1000;j++);
 }
+}
+```
+
+# Practical NO 10.
+## LED WITH SWITCH 
+```C
+  #include <reg51.h>
+
+sbit LED = P2^0;       // LED connected to pin P2.0
+sbit switch_pin = P0^1; // Switch connected to pin P0.1
+
+void delay(void) 
+{
+    unsigned int i, j;
+    for(i = 0; i <100; i++)
+        for(j = 0; j < 1275; j++);  // Roughly 1 ms delay at 12MHz
+}
+
+void main(void)
+ {
+    switch_pin = 0;  // Configure as input (quasi-bidirectional)
+    LED = 0;         // Turn OFF LED initially (assuming active low)
+
+    while(1) 
+    {
+        if (switch_pin == 0) 
+        { 
+         // If switch is pressed (active low)
+            delay();       // Debounce delay
+          
+               // Confirm press
+                LED = 0;        // Turn ON LED
+            
+        }
+         else 
+        {
+            LED = 1;            // Turn OFF LED
+        }
+    }
+}
+```
+# Practical NO 11.
+## STEPPER MOTOR 
+```c
+#include<reg51.h>
+void ms_delay(unsigned int t) //To create a delay of 200 ms = 200 x 1ms
+{
+unsigned i,j ;
+for(i=0;i<t;i++)	//200 times 1 ms delay for(j=0;j<1275;j++); //1ms delay
+}
+void main()
+{
+while(1) // To repeat infinitely
+{
+P2=0x0C;	//P2 = 0000 1100 First Step ms_delay(200);
+P2=0x06;	//P2 = 0000 0110 Second Step ms_delay(200);
+P2=0x03;	//P2 = 0000 0011 Third Step ms_delay(200);
+P2=0x09;	//P2 = 0000 1001 Fourth Step ms_delay(200);
 }
 ```
