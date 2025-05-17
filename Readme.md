@@ -127,7 +127,8 @@ XCH A,@R0
 END
 ```
 
-# Practical NO 7. INTERFACING
+# Practical NO 7. 
+## INTERFACING of LED
 ```asm
 #include <reg51.h>
 sbit LED = P1^2;
